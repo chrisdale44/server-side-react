@@ -9458,7 +9458,7 @@ module.exports = React.createClass({
 				React.createElement(
 					"title",
 					null,
-					"Universal App with React"
+					this.props.title
 				),
 				React.createElement("link", { rel: "stylesheet", href: "/style.css" })
 			),
@@ -9471,7 +9471,7 @@ module.exports = React.createClass({
 					React.createElement(
 						"h1",
 						null,
-						"Hello world"
+						this.props.title
 					),
 					React.createElement(
 						"p",
@@ -9484,6 +9484,9 @@ module.exports = React.createClass({
 						"Click me"
 					)
 				),
+				React.createElement("script", { dangerouslySetInnerHTML: {
+						__html: 'window.PROPS=' + JSON.stringify(this.props)
+					} }),
 				React.createElement("script", { src: "bundle.js" })
 			)
 		);
@@ -21738,8 +21741,10 @@ var React = __webpack_require__(52);
 var ReactDOM = __webpack_require__(81);
 var Component = __webpack_require__(80);
 
+var props = window.PROPS;
+
 ReactDOM.render(
-	React.createElement(Component), document
+	React.createElement(Component, props), document
 );
 
 
