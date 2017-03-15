@@ -9437,63 +9437,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var React = __webpack_require__(52);
-
-module.exports = React.createClass({
-	displayName: "exports",
-
-	_handleClick: function () {
-		alert();
-	},
-	render: function () {
-		return React.createElement(
-			"html",
-			null,
-			React.createElement(
-				"head",
-				null,
-				React.createElement(
-					"title",
-					null,
-					this.props.title
-				),
-				React.createElement("link", { rel: "stylesheet", href: "/style.css" })
-			),
-			React.createElement(
-				"body",
-				null,
-				React.createElement(
-					"div",
-					null,
-					React.createElement(
-						"h1",
-						null,
-						this.props.title
-					),
-					React.createElement(
-						"p",
-						null,
-						"Isn't server-side rendering remarkable?"
-					),
-					React.createElement(
-						"button",
-						{ onClick: this._handleClick },
-						"Click me"
-					)
-				),
-				React.createElement("script", { dangerouslySetInnerHTML: {
-						__html: 'window.PROPS=' + JSON.stringify(this.props)
-					} }),
-				React.createElement("script", { src: "bundle.js" })
-			)
-		);
-	}
-});
-
-/***/ }),
+/* 80 */,
 /* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24250,19 +24194,24 @@ function useRouterHistory(createHistory) {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = __webpack_require__(52);
-var { Router, Route, browserHistory } = __webpack_require__(229);
+var { Router, Route, IndexRoute, browserHistory } = __webpack_require__(229);
 
 // if window object exists, we are client-side JS
 if (typeof window === 'object') {
     function createElement(Component, props) {
-        return React.createElement(Component, _extends({}, props, window.PROPS));
+        return React.createElement(Component, _extends({}, props, { custom: window.PROPS }));
     }
 }
 
 module.exports = React.createElement(
     Router,
     { history: browserHistory, createElement: createElement },
-    React.createElement(Route, { path: '/', component: __webpack_require__(80) })
+    React.createElement(
+        Route,
+        { path: '/', component: __webpack_require__(237) },
+        React.createElement(IndexRoute, { component: __webpack_require__(236) }),
+        React.createElement(Route, { path: 'about', component: __webpack_require__(235) })
+    )
 );
 
 /***/ }),
@@ -26590,6 +26539,131 @@ module.exports = function (str) {
 	});
 };
 
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var React = __webpack_require__(52);
+
+module.exports = React.createClass({
+	displayName: 'About',
+	render: function () {
+		return React.createElement(
+			'p',
+			null,
+			'Current: ',
+			React.createElement(
+				'strong',
+				null,
+				'About'
+			)
+		);
+	}
+});
+
+/***/ }),
+/* 236 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var React = __webpack_require__(52);
+
+module.exports = React.createClass({
+	displayName: 'Index',
+	render: function () {
+		return React.createElement(
+			'p',
+			null,
+			'Current: ',
+			React.createElement(
+				'strong',
+				null,
+				'Index'
+			)
+		);
+	}
+});
+
+/***/ }),
+/* 237 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var React = __webpack_require__(52);
+var { Link } = __webpack_require__(229);
+
+module.exports = React.createClass({
+	displayName: 'Layout',
+	_handleClick: function () {
+		alert();
+	},
+	render: function () {
+		var custom = this.props.custom;
+		return React.createElement(
+			'html',
+			null,
+			React.createElement(
+				'head',
+				null,
+				React.createElement(
+					'title',
+					null,
+					custom.title
+				),
+				React.createElement('link', { rel: 'stylesheet', href: '/style.css' })
+			),
+			React.createElement(
+				'body',
+				null,
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'h1',
+						null,
+						custom.title
+					),
+					React.createElement(
+						'p',
+						null,
+						'Isn\'t server-side rendering remarkable?'
+					),
+					React.createElement(
+						'button',
+						{ onClick: this._handleClick },
+						'Click me'
+					),
+					this.props.children,
+					React.createElement(
+						'ul',
+						null,
+						React.createElement(
+							'li',
+							null,
+							React.createElement(
+								Link,
+								{ to: '/' },
+								'Home'
+							)
+						),
+						React.createElement(
+							'li',
+							null,
+							React.createElement(
+								Link,
+								{ to: '/about' },
+								'About'
+							)
+						)
+					)
+				),
+				React.createElement('script', { dangerouslySetInnerHTML: {
+						__html: 'window.PROPS=' + JSON.stringify(custom)
+					} }),
+				React.createElement('script', { src: 'bundle.js' })
+			)
+		);
+	}
+});
 
 /***/ })
 /******/ ]);

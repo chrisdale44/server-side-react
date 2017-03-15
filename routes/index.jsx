@@ -2,7 +2,6 @@ var router = require('express').Router();
 var React = require('react');
 var ReactDOMServer = require('react-dom/server');
 var ReactRouter = require('react-router');
-var Component = require('../Component.jsx');
 
 router.get('*', function(request, response) {
 	var props = { title: 'Universal React App' };
@@ -14,7 +13,7 @@ router.get('*', function(request, response) {
             var html = ReactDOMServer.renderToString(
                 <ReactRouter.RouterContext {...renderProps} 
                     createElement={function(Component, renderProps) {
-                        return <Component {...renderProps} {...props} />
+                        return <Component {...renderProps} custom={props} />
                     }}
                 />
             );
