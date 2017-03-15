@@ -7,12 +7,7 @@ var Component = require('../Component.jsx');
 router.get('*', function(request, response) {
 	var props = { title: 'Universal React App' };
     ReactRouter.match({
-        routes: (
-            <ReactRouter.Router history={ReactRouter.browserHistory}>
-                <ReactRouter.Route path='/' component={require('../Component.jsx')}>
-                </ReactRouter.Route>
-            </ReactRouter.Router>
-        ),
+        routes: require('./routes.jsx'),
         location: request.url
     }, function(error, redirectLocation, renderProps) {
         if (renderProps) {
